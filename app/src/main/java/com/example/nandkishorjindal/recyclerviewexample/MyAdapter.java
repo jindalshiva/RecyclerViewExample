@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -33,11 +35,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        ListItem listItem = listItems.get( i );
+        final ListItem listItem = listItems.get( i );
         viewHolder.textViewHead.setText( listItem.getHead() );
         viewHolder.textViewDesc.setText( listItem.getDesc() );
 
         Picasso.get().load(listItem.getImageUrl()).into(viewHolder.imageVIEW);
+
+        viewHolder.linearLayout.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText( context,"you clicked " + listItem.getHead(),Toast.LENGTH_SHORT).show();
+            }
+        } );
     }
 
     @Override
@@ -50,6 +59,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public TextView textViewHead;
         public TextView textViewDesc;
         public ImageView imageVIEW;
+        public LinearLayout linearLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super( itemView );
@@ -57,6 +67,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             textViewHead = (TextView) itemView.findViewById( R.id.textHeading );
             textViewDesc = (TextView) itemView.findViewById( R.id.textDescription );
             imageVIEW = (ImageView) itemView.findViewById( R.id.imageView );
+            linearLayout = (LinearLayout) itemView.findViewById( R.id.linearLayout );
         }
     }
 }
